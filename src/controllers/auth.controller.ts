@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
-import asyncHandler from 'express-async-handler';
-import { authService } from '../services/auth.service.js';
+import { Request, Response } from "express";
+import asyncHandler from "express-async-handler";
+import { authService } from "../services/auth.service.js";
 
 export const authController = {
   register: asyncHandler(async (req: Request, res: Response) => {
@@ -13,8 +13,8 @@ export const authController = {
       user: {
         id: user._id,
         name: user.name,
-        email: user.email
-      }
+        email: user.email,
+      },
     });
   }),
 
@@ -29,8 +29,8 @@ export const authController = {
       user: {
         id: user._id,
         name: user.name,
-        email: user.email
-      }
+        email: user.email,
+      },
     });
-  })
+  }),
 };

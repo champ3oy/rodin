@@ -1,5 +1,5 @@
 import cron from "node-cron";
-import { checkEndpoints } from "./monitor.ts";
+import { checkEndpoints } from "./monitor.js";
 import logger from "../utils/logger.js";
 
 export function startMonitoringSystem() {
