@@ -5,6 +5,7 @@ const endpointSchema = Joi.object({
   name: Joi.string().required(),
   interval: Joi.number().min(30).max(3600).default(60),
   active: Joi.boolean(),
+  type: Joi.string().valid('service', 'website').required()
 });
 
 export const validateEndpoint = (req, res, next) => {

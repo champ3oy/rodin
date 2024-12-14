@@ -32,9 +32,13 @@ const router = express.Router();
  *               active:
  *                 type: boolean
  *                 default: true
+ *               type:
+ *                 type: string
+ *                 enum: [service, website]
  *             required:
  *               - url
  *               - name
+ *               - type
  *     responses:
  *       201:
  *         description: Endpoint created successfully
@@ -69,6 +73,9 @@ router.post("/", validateEndpoint, protect, endpointController.createEndpoint);
  *                     type: number
  *                   active:
  *                     type: boolean
+ *                   type:
+ *                     type: string
+ *                     enum: [service, website]
  *                   createdAt:
  *                     type: string
  *                     format: date-time

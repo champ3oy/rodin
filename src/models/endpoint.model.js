@@ -20,6 +20,11 @@ const endpointSchema = new mongoose.Schema({
   active: {
     type: Boolean,
     default: true
+  },
+  type: {
+    type: String,
+    enum: ['service', 'website'],
+    required: true
   }
 }, {
   timestamps: true
