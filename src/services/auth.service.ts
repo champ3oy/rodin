@@ -1,20 +1,24 @@
-import { User, IUser } from '../models/user.model.js';
-import { AppError } from '../utils/appError.js';
+import { User, IUser } from "../models/user.model.js";
+import { AppError } from "../utils/appError.js";
 
 export const authService = {
-  async register(userData: { name: string; email: string; password: string }): Promise<IUser> {
+  async register(userData: {
+    name: string;
+    email: string;
+    password: string;
+  }): Promise<IUser> {
     const existingUser = await User.findOne({ email: userData.email });
     if (existingUser) {
-      throw new AppError('Email already registered', 400);
+      throw new AppError("Email already registered", 400);
     }
     return User.create(userData);
   },
 
   async login(email: string, password: string): Promise<IUser> {
-    const user = await User.findOne({ email }).select('+password');
+    const user = await User.findOne({ email }).select("+password");
     if (!user || !(await user.comparePassword(password))) {
-      throw new AppError('Invalid credentials', 401);
+      throw new AppError("Invalid credentials", 401);
     }
     return user;
-  }
+  },
 };
