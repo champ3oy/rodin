@@ -14,10 +14,10 @@ export const monitoringService = {
 
   async getResultsByEndpoint(endpointId, limit = 100) {
     try {
-      return await MonitoringResult.find({
-        endpoint: endpointId,
-        // statusCode: { $ne: 200 },
-      })
+      if (!endpointId) {
+        return [];
+      }
+      return await MonitoringResult.find({ endpoint: endpointId })
         .sort({ createdAt: -1 })
         .limit(limit)
         .populate("endpoint", "name url");

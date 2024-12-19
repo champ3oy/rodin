@@ -16,7 +16,8 @@ export const endpointController = {
   }),
 
   getAllEndpoints: asyncHandler(async (req, res) => {
-    const endpoints = await endpointService.getAllEndpoints();
+    const user = req.user;
+    const endpoints = await endpointService.getAllEndpoints(user?._id);
     res.json(endpoints);
   }),
 
