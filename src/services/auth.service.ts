@@ -7,7 +7,9 @@ export const authService = {
     email: string;
     password: string;
   }): Promise<IUser> {
-    const existingUser = await User.findOne({ email: userData.email });
+    const existingUser = await User.findOne({
+      email: String(userData.email).toLowerCase(),
+    });
     if (existingUser) {
       throw new AppError("Email already registered", 400);
     }
@@ -15,7 +17,9 @@ export const authService = {
   },
 
   async login(email: string, password: string): Promise<IUser> {
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({
+      email: String(email).toLowerCase(),
+    }).select("+password");
     if (!user || !(await user.comparePassword(password))) {
       throw new AppError("Invalid credentials", 401);
     }
