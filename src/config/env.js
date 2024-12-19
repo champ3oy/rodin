@@ -9,4 +9,5 @@ export const config = {
     process.env.MONGODB_URI || "mongodb://localhost:27017/monitoring-system",
   JWT_SECRET: process.env.JWT_SECRET || "secret",
   JWT_EXPIRE: process.env.JWT_EXPIRE || "24h",
+  RESEND_APIKEY: process.env.RESEND_APIKEY || "24h",
 };

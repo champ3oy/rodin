@@ -1,4 +1,9 @@
+import { config } from "../config/env.js";
+import { User } from "../models/user.model.js";
 import logger from "./logger.js";
+import { Resend } from "resend";
+
+const resend = new Resend(config.RESEND_APIKEY);
 
 interface NotificationPayload {
   userId: string;
@@ -11,10 +16,18 @@ export async function sendNotification(
   payload: NotificationPayload
 ): Promise<void> {
   try {
+    let user = await User.findById(payload.userId);
+
     // TODO: Implement notification sending logic
     logger.info("Sending notification:", payload);
 
     // TODO: add email notification
+    await resend.emails.send({
+      from: "Rodin <alert@deadal.us>",
+      to: user?.email,
+      subject: payload.title,
+      html: payload?.message,
+    });
 
     // TODO: add SMS notification
 
