@@ -24,7 +24,7 @@ export async function checkEndpoints() {
       await uptimeService.updateUptime(endpoint, true);
       await alertService.resolveAlert(endpoint ? endpoint._id : "");
     } catch (error) {
-      logger.error(`Error monitoring endpoint ${endpoint.url}:`, error);
+      logger.error(`Error monitoring endpoint ${endpoint.url}`);
 
       const statusCode = error.response?.status || 500;
       await monitoringService.saveResult({

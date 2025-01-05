@@ -3,7 +3,7 @@ import { IEndpoint } from "../models/endpoint.model.js";
 import { sendNotification } from "../utils/notification.js";
 import logger from "../utils/logger.js";
 
-const FAILURE_THRESHOLD = 3;
+const FAILURE_THRESHOLD = 1;
 
 export const alertService = {
   async processFailure(endpoint: IEndpoint, error: string): Promise<void> {
