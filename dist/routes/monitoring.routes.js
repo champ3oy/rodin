@@ -1,8 +1,6 @@
 import express from "express";
 import { monitoringController } from "../controllers/monitoring.controller.js";
-
 const router = express.Router();
-
 /**
  * @swagger
  * /api/monitoring/results/{endpointId}:
@@ -43,5 +41,4 @@ const router = express.Router();
  *         description: Internal server error
  */
 router.get("/results/:endpointId", monitoringController.getResults);
-
 export default router;
