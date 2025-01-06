@@ -29,7 +29,7 @@ export const alertService = {
       if (alert.failureCount === FAILURE_THRESHOLD) {
         await sendNotification({
           userId: endpoint.user ? endpoint.user.toString() : "",
-          title: "Service Down Alert",
+          title: "🔴 Service Down Alert - " + endpoint?.name,
           message: alert.message,
           type: "service_down",
         });
@@ -39,10 +39,10 @@ export const alertService = {
     }
   },
 
-  async resolveAlert(endpointId: any): Promise<void> {
+  async resolveAlert(endpoint: IEndpoint): Promise<void> {
     try {
       const alert = await Alert.findOne({
-        endpoint: endpointId,
+        endpoint: endpoint?._id,
         status: "active",
       });
 
@@ -50,6 +50,13 @@ export const alertService = {
         alert.status = "resolved";
         alert.resolvedAt = new Date();
         await alert.save();
+
+        await sendNotification({
+          userId: endpoint.user ? endpoint.user.toString() : "",
+          title: "🟩 Service Up Alert - " + endpoint?.name,
+          message: alert.message,
+          type: "service_up",
+        });
       }
     } catch (error) {
       logger.error("Error resolving alert:", error);
