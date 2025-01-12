@@ -18,7 +18,7 @@ export async function checkEndpoints() {
             });
             // Update uptime and resolve any active alerts
             await uptimeService.updateUptime(endpoint, true);
-            await alertService.resolveAlert(endpoint ? endpoint._id : "");
+            await alertService.resolveAlert(endpoint);
         }
         catch (error) {
             logger.error(`Error monitoring endpoint ${endpoint.url}`);

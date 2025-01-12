@@ -25,7 +25,7 @@ export const alertService = {
             if (alert.failureCount === FAILURE_THRESHOLD) {
                 await sendNotification({
                     userId: endpoint.user ? endpoint.user.toString() : "",
-                    title: "Service Down Alert",
+                    title: "🔴 Service Down Alert - " + endpoint?.name,
                     message: alert.message,
                     type: "service_down",
                 });
@@ -35,16 +35,22 @@ export const alertService = {
             logger.error("Error processing failure alert:", error);
         }
     },
-    async resolveAlert(endpointId) {
+    async resolveAlert(endpoint) {
         try {
             const alert = await Alert.findOne({
-                endpoint: endpointId,
+                endpoint: endpoint?._id,
                 status: "active",
             });
             if (alert) {
                 alert.status = "resolved";
                 alert.resolvedAt = new Date();
                 await alert.save();
+                await sendNotification({
+                    userId: endpoint.user ? endpoint.user.toString() : "",
+                    title: "🟩 Service Up Alert - " + endpoint?.name,
+                    message: alert.message,
+                    type: "service_up",
+                });
             }
         }
         catch (error) {
